@@ -45,7 +45,7 @@ export default {
       //表单数据对象
       loginForm: {
         username: 'admin',
-        password: '123456'
+        password: '12345699'
       },
       // 表单数据对象校验
       LoginRules: {
@@ -80,7 +80,7 @@ export default {
             this.$message.success('操作成功!'); //成功提示
             window.sessionStorage.setItem("user", res.user); //存储user对象
             this.$router.push({ path: '/home' }); //页面路由跳转路径
-            // console.log(res.user);
+             console.log(res.user);
 
           } else {
             this.$message.error('操作失败!'); //失败提示

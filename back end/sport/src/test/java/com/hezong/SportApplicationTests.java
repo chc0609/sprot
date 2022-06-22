@@ -1,4 +1,4 @@
-package com.yuan;
+package com.hezong;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

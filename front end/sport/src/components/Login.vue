@@ -5,7 +5,7 @@
     <div class="login_box">
       <!-- logon头像开始 -->
       <div class="avatar_box">
-        <img src="../assets/logo.jpg" alt="logo" />
+        <img src="../assets/hzfoot_logo.png" alt="logo" />
       </div>
       <!-- logon头像结束 -->
 
@@ -80,8 +80,7 @@ export default {
             this.$message.success('操作成功!'); //成功提示
             window.sessionStorage.setItem("user", res.user); //存储user对象
             this.$router.push({ path: '/home' }); //页面路由跳转路径
-             console.log(res.user);
-
+            // console.log(res.user);
           } else {
             this.$message.error('操作失败!'); //失败提示
           }

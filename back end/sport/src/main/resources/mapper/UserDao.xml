@@ -2,15 +2,15 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yuan.dao.UserDao">
+<mapper namespace="com.hezong.dao.UserDao">
     <!--根据用户名和密码获取信息-->
-    <select id="getUserByMessage" resultType="com.yuan.pojo.User">
+    <select id="getUserByMessage" resultType="com.hezong.pojo.User">
         SELECT * FROM easyuser WHERE
         username = #{username} AND password=#{password} AND state = 1;
     </select>
 
     <!--获取所有用户  pageStart:从哪里开始展示  pageSize：页面展示条数 -->
-    <select id="getAllUser" resultType="com.yuan.pojo.User">
+    <select id="getAllUser" resultType="com.hezong.pojo.User">
         SELECT * FROM easyuser
         <if test="username !=null">
             WHERE username LIKE #{username}
@@ -44,7 +44,7 @@
     </delete>
 
     <!--修改用户前先查询出用户 -->
-    <select id="getUpdateUser" resultType="com.yuan.pojo.User">
+    <select id="getUpdateUser" resultType="com.hezong.pojo.User">
         SELECT * FROM easyuser WHERE id=#{id}
     </select>
 

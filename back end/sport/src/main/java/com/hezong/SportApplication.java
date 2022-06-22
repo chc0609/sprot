@@ -1,4 +1,4 @@
-package com.yuan;
+package com.hezong;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

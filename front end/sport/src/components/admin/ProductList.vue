@@ -80,7 +80,7 @@
     <!-- 用户列表主体部分结束 -->
 
     <!-- 添加用户区域开始 -->
-    <el-dialog title="添加用户" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
+    <el-dialog title="添加产品" :visible.sync="addDialogVisible" width="50%" @close="addDialogClosed">
       <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="70px">
         <!-- 用户名 -->
         <el-form-item label="用户名" prop="username">

@@ -14,7 +14,7 @@ import axios from 'axios'
 //全局中挂载axios
 Vue.prototype.$http = axios
 //设置请求初始信息,也就是设置访问的后端路径
-axios.defaults.baseURL = 'http://localhost:9000'
+axios.defaults.baseURL = 'http://localhost:8888'
 
 Vue.config.productionTip = false
 

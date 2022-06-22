@@ -8,6 +8,8 @@ import Home from '../components/Home.vue'
 import Welcome from '../components/Welcome.vue'
 //引入UserList组件
 import UserList from '../components/admin/UserList.vue'
+//引入ProductList组件
+import ProductList from '../components/admin/ProductList.vue'
 
 Vue.use(VueRouter)
 
@@ -28,6 +30,7 @@ const routes = [
     children: [
       { path: '/welcome', component: Welcome },
       { path: '/user', component: UserList },
+      { path: '/product', component: ProductList },
     ],
   },
 ]

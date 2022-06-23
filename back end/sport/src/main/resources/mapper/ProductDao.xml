@@ -3,54 +3,66 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hezong.dao.Product">
-    <!--根据产品名称或者零件号获取产品信息-->
-    <select id="getProductByMessage" resultType="com.hezong.pojo.Product">
+    <!--根据产品名称获取产品信息-->
+    <select id="getProductByName" resultType="com.hezong.pojo.Product">
         SELECT * FROM PRODUCT WHERE
-            PRODNAME = #{productName} or OEM like %#{Oem}%;
+            PRODNAME = #{productName};
     </select>
-
+    <!--根据零件号获取产品信息-->
+    <select id="getProductByOem" resultType="com.hezong.pojo.Product">
+        SELECT * FROM PRODUCT WHERE
+            OEM = #{oem};
+    </select>
     <!--获取所有产品  pageStart:从哪里开始展示  pageSize：页面展示条数 -->
     <select id="getAllProduct" resultType="com.hezong.pojo.Product">
         SELECT * FROM PRODUCT
-        <if test="productName !=null">
-            WHERE PRODNAME LIKE #{productName}
-        </if>
+        <choose>
+            <when test="productName !=null">
+                WHERE PRODNAME LIKE #{productName}
+            </when>
+            <when test="oem !=null">
+                WHERE OEM LIKE #{oem}
+            </when>
+        </choose>
         LIMIT #{pageStart},#{pageSize}
     </select>
 
-    <!--获取所有用户的个数-->
+    <!--获取所有产品的个数-->
     <select id="getProductCounts" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM PRODUCT
-        <if test="username !=null">
-            WHERE username LIKE #{username}
-        </if>
+        <choose>
+            <when test="productName !=null">
+                WHERE PRODNAME LIKE #{productName}
+            </when>
+            <when test="oem !=null">
+                WHERE OEM LIKE #{oem}
+            </when>
+        </choose>
     </select>
 
-    <!--更新用户状态-->
-    <update id="updateState">
-        UPDATE easyuser SET state=#{state} WHERE id=#{id}
-    </update>
-
-    <!--添加用户的方法-->
-    <insert id="addUser">
-            INSERT INTO easyuser
-            (username,password,email,role,state)
-            VALUES(#{username},#{password},#{email},#{role},#{state})
+    <!--添加产品的方法-->
+    <insert id="addProduct">
+            INSERT INTO PRODUCT
+            (PRODNAME,AUTOTYPE,OEM,UPDATETIME,UPDATEUSER,IMAGEPATH)
+            VALUES(#{prodname},#{autoType},#{oem},#{updateTime},#{updateUser},#{imagePath})
     </insert>
 
-    <!--删除用户的方法-->
-    <delete id="deleteUser" >
-        DELETE FROM easyuser WHERE id=#{id}
+    <!--删除用产品的方法-->
+    <delete id="deleteProduct" >
+        DELETE FROM PRODUCT WHERE id=#{id}
     </delete>
 
-    <!--修改用户前先查询出用户 -->
-    <select id="getUpdateUser" resultType="com.hezong.pojo.Product">
-        SELECT * FROM easyuser WHERE id=#{id}
+    <!--修改产品前先查询出产品 -->
+    <select id="getProductById" resultType="com.hezong.pojo.Product">
+        SELECT * FROM PRODUCT WHERE id=#{id}
     </select>
 
-    <!--修改用户前，根据查询出的用户进行修改-->
-    <update id="editUser">
-        UPDATE easyuser SET username=#{username},password=#{password},email=#{email} WHERE id=#{id}
+    <!--修改产品前，根据查询出的产品进行修改-->
+    <update id="editProductById">
+        UPDATE PRODUCT SET PRODNAME=#{prodname},AUTOTYPE=#{autoType},OEM=#{oem},UPDATETIME=#{updateTime},UPDATEUSER=#{updateUser} WHERE id=#{id}
     </update>
-
+    <!--更新产品图片-->
+    <update id="updateState">
+        UPDATE PRODUCT SET IMAGEPATH=#{imagePath} WHERE id=#{id}
+    </update>
 </mapper>

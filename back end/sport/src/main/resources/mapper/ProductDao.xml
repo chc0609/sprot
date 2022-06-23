@@ -62,7 +62,7 @@
         UPDATE PRODUCT SET PRODNAME=#{prodname},AUTOTYPE=#{autoType},OEM=#{oem},UPDATETIME=#{updateTime},UPDATEUSER=#{updateUser} WHERE id=#{id}
     </update>
     <!--更新产品图片-->
-    <update id="updateState">
+    <update id="updateImage">
         UPDATE PRODUCT SET IMAGEPATH=#{imagePath} WHERE id=#{id}
     </update>
 </mapper>

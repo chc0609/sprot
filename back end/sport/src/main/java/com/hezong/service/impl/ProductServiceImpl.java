@@ -22,25 +22,23 @@ public class ProductServiceImpl implements ProductService {
     ProductDao productDao;
 
     @Override
-    public List<Product> getAllProduct(QueryProInfo queryProInfo) {
+    public Map<String, Object> getAllProduct(QueryProInfo queryProInfo) {
         Map<String, Object> res = new HashMap<>();
-        String queryName = null;
-        if()
         //查询用户总数，模糊查询用户的总数,
-        int counts = getProductCounts("%" + queryName + "%");
+        int count = getProductCount(queryProInfo.getQueryName());
         //分页公式(当前页数-1)*每页最大数
         int pageStart = (queryProInfo.getPageNum() - 1) * queryProInfo.getPageSize();
 
-        //获取所有的用户,并进行分页操作
-        List<User> users = getAllUser("%" + queryProInfo.getUsername() + "%", pageStart, queryProInfo.getPageSize());
-        res.put("counts", counts); //把总条数存入map
-        res.put("users", users); //把所有用户存入map
-        return productDao.getAllProduct(productName,oem,pageStart,pageSize);
+        //获取所有的产品,并进行分页操作
+        List<Product> list = productDao.getAllProduct(queryProInfo.getQueryName(), queryProInfo.getPageNum(), queryProInfo.getPageSize());
+        res.put("count", count); //把总条数存入map
+        res.put("list", list); //把所有用户存入map
+        return res;
     }
 
     @Override
-    public int getProductCounts(String queryName) {
-        return 0;
+    public int getProductCount(String queryName) {
+        return productDao.getProductCount(queryName);
     }
 
     @Override
@@ -59,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public int editProductById(Product user) {
+    public int editProductById(Product product) {
         return 0;
     }
 

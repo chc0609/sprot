@@ -16,28 +16,18 @@
     <!--获取所有产品  pageStart:从哪里开始展示  pageSize：页面展示条数 -->
     <select id="getAllProduct" resultType="com.hezong.pojo.Product">
         SELECT * FROM PRODUCT
-        <choose>
-            <when test="productName !=null">
-                WHERE PRODNAME LIKE #{productName}
-            </when>
-            <when test="oem !=null">
-                WHERE OEM LIKE #{oem}
-            </when>
-        </choose>
+        <if test="queryName !=null">
+            WHERE PRODNAME LIKE concat('%',#{queryName},'%') or OEM LIKE concat('%',#{queryName},'%')
+        </if>
         LIMIT #{pageStart},#{pageSize}
     </select>
 
     <!--获取所有产品的个数-->
-    <select id="getProductCounts" resultType="java.lang.Integer">
+    <select id="getProductCount" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM PRODUCT
-        <choose>
-            <when test="productName !=null">
-                WHERE PRODNAME LIKE #{productName}
-            </when>
-            <when test="oem !=null">
-                WHERE OEM LIKE #{oem}
-            </when>
-        </choose>
+            <if test="queryName !=null">
+                WHERE PRODNAME LIKE concat('%',#{queryName},'%') or OEM LIKE concat('%',#{queryName},'%')
+            </if>
     </select>
 
     <!--添加产品的方法-->

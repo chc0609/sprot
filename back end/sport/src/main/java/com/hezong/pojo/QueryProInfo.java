@@ -1,35 +1,19 @@
 package com.hezong.pojo;
 
 public class QueryProInfo {
-    private String productName; //查询信息productName
-    private String productOEM;  //零件号
+    private String queryName; //可查零件与产品名称
     private int pageNum=1; //当前页数
     private int pageSize=1; //每页最大数
 
     public QueryProInfo() {
     }
 
-    public QueryProInfo(String productName, String productOEM, int pageNum, int pageSize) {
-        this.productName = productName;
-        this.productOEM = productOEM;
-        this.pageNum = pageNum;
-        this.pageSize = pageSize;
+    public String getQueryName() {
+        return queryName;
     }
 
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getProductOEM() {
-        return productOEM;
-    }
-
-    public void setProductOEM(String productOEM) {
-        this.productOEM = productOEM;
+    public void setQueryName(String queryName) {
+        this.queryName = queryName;
     }
 
     public int getPageNum() {
@@ -51,8 +35,7 @@ public class QueryProInfo {
     @Override
     public String toString() {
         return "QueryProInfo{" +
-                "productName='" + productName + '\'' +
-                ", productOEM='" + productOEM + '\'' +
+                "queryName='" + queryName + '\'' +
                 ", pageNum=" + pageNum +
                 ", pageSize=" + pageSize +
                 '}';

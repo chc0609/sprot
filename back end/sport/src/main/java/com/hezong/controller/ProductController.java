@@ -1,18 +1,13 @@
 package com.hezong.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.hezong.pojo.QueryInfo;
+import com.hezong.pojo.Product;
 import com.hezong.pojo.QueryProInfo;
-import com.hezong.pojo.User;
 import com.hezong.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 /**
  * 产品控制器
@@ -22,52 +17,40 @@ public class ProductController {
     @Autowired
     ProductService productService;
 
-    //获取查询用户和进行分页操作
+    //获取查询产品和进行分页操作
     @RequestMapping("/allProduct")
+    @ResponseBody
     public Map<String, Object> getUserList(QueryProInfo queryProInfo) {
-
-
-
-        String res_string = JSON.toJSONString(res); //转换为json字符串传给前端
-        return res_string;
+        return productService.getAllProduct(queryProInfo);
     }
 
-    //更新用户状态
-    @RequestMapping("/userState")
-    public String updateUserState(@RequestParam("id") Integer id, @RequestParam("state") Boolean state) {
 
-        int i = productService.updateState(id, state);
-        return i > 0 ? "success" : "error";
-    }
-
-    //添加用户的方法
-    @RequestMapping("/addUser")
-    public String addUser(@RequestBody User user){
-        user.setRole("普通用户"); //初始化状态
-        user.setState(false);//初始化状态
-        int i = productService.addUser(user);
+    //添加产品的方法
+    @RequestMapping("/addProduct")
+    public String addUser(@RequestBody Product product){
+        int i = productService.addProduct(product);
         return i > 0 ? "success" : "error";
     }
 
     //删除用户的方法
     @RequestMapping("/deleteUser")
     public String deleteUser(int id){
-        int i =userService.deleteUser(id);
+        int i =productService.deleteProduct(id);
         return i > 0 ? "success" : "error";
     }
 
     //更新前获取用户的ID信息方法
     @RequestMapping("/getUpdate")
     public String getUpdateUser(int id){
-        User user = userService.getUpdateUser(id); //根据ID查询到用户
-        String s = JSON.toJSONString(user);
+        Product product = productService.getProductById(id); //根据ID查询到产品
+        String s = JSON.toJSONString(product);
         return s;
     }
 
     //更新前根据查询到的用户进行修改
-    @RequestMapping("/editUser")
-    public String editUser(@RequestBody User user){
-        int i = userService.editUser(user);
+    @RequestMapping("/editProduct")
+    public String editProduct(@RequestBody Product product){
+        int i = productService.editProductById(product);
         return i > 0 ? "success" : "error";
     }
 }

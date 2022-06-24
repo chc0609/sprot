@@ -15,10 +15,10 @@ import java.util.List;
 @Repository
 public interface ProductDao {
     //获取所有产品  pageStart:从哪里开始展示  pageSize：页面展示条数
-    List<Product> getAllProduct(@Param("productName") String productName, @Param("oem") String oem, @Param("pageStart") int pageStart, @Param("pageSize") int pageSize);
+    List<Product> getAllProduct(@Param("queryName") String queryName, @Param("pageStart") int pageStart, @Param("pageSize") int pageSize);
 
     //获取所有产品的个数
-    int getProductCounts(@Param("productName") String productName,@Param("oem") String oem);
+    int getProductCount(@Param("queryName") String queryName);
 
     //添加产品的方法
     int addProduct(Product product);

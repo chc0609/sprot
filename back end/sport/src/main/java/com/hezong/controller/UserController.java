@@ -5,13 +5,11 @@ import com.hezong.pojo.QueryInfo;
 import com.hezong.pojo.User;
 import com.hezong.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 用户控制器
@@ -23,7 +21,8 @@ public class UserController {
 
     //获取查询用户和进行分页操作
     @RequestMapping("/allUser")
-    public String getUserList(QueryInfo queryInfo) {
+    @ResponseBody
+    public Map<String, Object> getUserList(QueryInfo queryInfo) {
         //查询用户总数，模糊查询用户的总数,
         int counts = userService.getUserCounts("%" + queryInfo.getUsername() + "%");
         //分页公式(当前页数-1)*每页最大数
@@ -32,11 +31,10 @@ public class UserController {
         //获取所有的用户,并进行分页操作
         List<User> users = userService.getAllUser("%" + queryInfo.getUsername() + "%", pageStart, queryInfo.getPageSize());
         //
-        HashMap<String, Object> res = new HashMap<>();
+        Map<String, Object> res = new HashMap<>();
         res.put("counts", counts); //把总条数存入map
         res.put("users", users); //把所有用户存入map
-        String res_string = JSON.toJSONString(res); //转换为json字符串传给前端
-        return res_string;
+        return res;
     }
 
     //更新用户状态

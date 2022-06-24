@@ -1,9 +1,9 @@
 package com.hezong.service;
 
 import com.hezong.pojo.Product;
-import org.apache.ibatis.annotations.Param;
+import com.hezong.pojo.QueryProInfo;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @program: sprot
@@ -14,10 +14,10 @@ import java.util.List;
  **/
 public interface ProductService {
     //获取所有产品  pageStart:从哪里开始展示  pageSize：页面展示条数
-    List<Product> getAllProduct(@Param("productName") String productName,@Param("oem") String oem, @Param("pageStart") int pageStart, @Param("pageSize") int pageSize);
+    Map<String, Object> getAllProduct(QueryProInfo queryProInfo);
 
     //获取所有产品的个数
-    int getProductCounts(@Param("productName") String productName,@Param("oem") String oem);
+    int getProductCount(String productName);
 
     //添加产品的方法
     int addProduct(Product product);
@@ -26,8 +26,8 @@ public interface ProductService {
     int deleteProduct(int id);
 
     //修改用户的方法
-    Product getProductById(int id);//根据id查询出用户
-    int editProductById(Product user);//根据查询出的用户进行修改
+    Product getProductById(int id);//根据id查询出产品
+    int editProductById(Product product);//根据查询出的产品进行修改
 
     //更新图片
     void updateImage(int id);

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3>欢迎登录后台管理平台！</h3>
+    <h3>欢迎登录后台管理平台</h3>
   </div>
 </template>
 <script>

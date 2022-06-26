@@ -1,7 +1,6 @@
 package com.hezong.service;
 
 import com.hezong.pojo.User;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

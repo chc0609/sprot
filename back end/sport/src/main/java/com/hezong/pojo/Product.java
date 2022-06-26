@@ -5,7 +5,7 @@ package com.hezong.pojo;
  */
 public class Product {
     private int id;
-    private String productName; //产品名
+    private String prodName; //产品名
     private String autoType; //车型
     private String oem; //零件号
     private String updateTime; //更新时间
@@ -13,9 +13,9 @@ public class Product {
     private String imagePath; //产品图片路径
     private boolean state; //状态
 
-    public Product(int id, String productName, String autoType, String oem, String updateTime, String updateUser, String imagePath, boolean state) {
+    public Product(int id, String prodName, String autoType, String oem, String updateTime, String updateUser, String imagePath, boolean state) {
         this.id = id;
-        this.productName = productName;
+        this.prodName = prodName;
         this.autoType = autoType;
         this.oem = oem;
         this.updateTime = updateTime;
@@ -35,12 +35,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getProdName() {
+        return prodName;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setProdName(String prodName) {
+        this.prodName = prodName;
     }
 
     public String getAutoType() {
@@ -95,7 +95,7 @@ public class Product {
     public String toString() {
         return "Product{" +
                 "id=" + id +
-                ", productName='" + productName + '\'' +
+                ", prodName='" + prodName + '\'' +
                 ", autoType='" + autoType + '\'' +
                 ", oem='" + oem + '\'' +
                 ", updateTime='" + updateTime + '\'' +

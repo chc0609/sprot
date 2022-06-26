@@ -3,10 +3,15 @@ package com.hezong.service.impl;
 import com.hezong.dao.ProductDao;
 import com.hezong.pojo.Product;
 import com.hezong.pojo.QueryProInfo;
-import com.hezong.pojo.User;
 import com.hezong.service.ProductService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.xml.crypto.Data;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +22,10 @@ import java.util.Map;
  * @description: 产品管理的实现类
  * @date 2022/6/23 23:06
  */
+@Service
 public class ProductServiceImpl implements ProductService {
+
+    Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     ProductDao productDao;
 
@@ -30,9 +38,10 @@ public class ProductServiceImpl implements ProductService {
         int pageStart = (queryProInfo.getPageNum() - 1) * queryProInfo.getPageSize();
 
         //获取所有的产品,并进行分页操作
-        List<Product> list = productDao.getAllProduct(queryProInfo.getQueryName(), queryProInfo.getPageNum(), queryProInfo.getPageSize());
+        List<Product> list = productDao.getAllProduct(queryProInfo.getQueryName(), pageStart, queryProInfo.getPageSize());
         res.put("count", count); //把总条数存入map
         res.put("list", list); //把所有用户存入map
+
         return res;
     }
 
@@ -43,6 +52,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public int addProduct(Product product) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        product.setUpdateTime(formatter.format(new Date()));
+        productDao.addProduct(product);
         return 0;
     }
 
@@ -53,16 +65,16 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product getProductById(int id) {
-        return null;
+        return productDao.getProductById(id);
     }
 
     @Override
     public int editProductById(Product product) {
-        return 0;
+        return productDao.editProductById(product);
     }
 
     @Override
-    public void updateImage(int id) {
-
+    public int updateImage(int id) {
+        return 0;
     }
 }

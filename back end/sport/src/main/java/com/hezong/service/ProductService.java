@@ -17,7 +17,7 @@ public interface ProductService {
     Map<String, Object> getAllProduct(QueryProInfo queryProInfo);
 
     //获取所有产品的个数
-    int getProductCount(String productName);
+    int getProductCount(String queryName);
 
     //添加产品的方法
     int addProduct(Product product);
@@ -30,5 +30,5 @@ public interface ProductService {
     int editProductById(Product product);//根据查询出的产品进行修改
 
     //更新图片
-    void updateImage(int id);
+    int updateImage(int id);
 }

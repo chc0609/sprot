@@ -33,15 +33,15 @@ public class ProductController {
     }
 
     //删除用户的方法
-    @RequestMapping("/deleteUser")
+    @RequestMapping("/deleteProduct")
     public String deleteUser(int id){
         int i =productService.deleteProduct(id);
         return i > 0 ? "success" : "error";
     }
 
     //更新前获取用户的ID信息方法
-    @RequestMapping("/getUpdate")
-    public String getUpdateUser(int id){
+    @RequestMapping("/getProductById")
+    public String getProductById(int id){
         Product product = productService.getProductById(id); //根据ID查询到产品
         String s = JSON.toJSONString(product);
         return s;
@@ -51,6 +51,13 @@ public class ProductController {
     @RequestMapping("/editProduct")
     public String editProduct(@RequestBody Product product){
         int i = productService.editProductById(product);
+        return i > 0 ? "success" : "error";
+    }
+
+    //更新图片
+    @RequestMapping("/updateImage")
+    public String updateImage(int id){
+        int i = productService.updateImage(id);
         return i > 0 ? "success" : "error";
     }
 }

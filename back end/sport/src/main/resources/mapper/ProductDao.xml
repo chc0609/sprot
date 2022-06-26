@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hezong.dao.Product">
+<mapper namespace="com.hezong.dao.ProductDao">
     <!--根据产品名称获取产品信息-->
     <select id="getProductByName" resultType="com.hezong.pojo.Product">
         SELECT * FROM PRODUCT WHERE

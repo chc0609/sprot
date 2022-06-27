@@ -41,10 +41,10 @@
         <el-table-column label="零件类型" prop="oem">
           <!--  -->
         </el-table-column>
-        <el-table-column label="操作用户" prop="updateUser">
+        <el-table-column label="操作用户" prop="updateUser" width="90%">
           <!--  -->
         </el-table-column>
-        <el-table-column label="上架时间" prop="updateTime">
+        <el-table-column label="上架时间" prop="updateTime" >
           <!--  -->
         </el-table-column>
         <el-table-column label="产品图片" prop="imagePath" width="80%">
@@ -157,6 +157,7 @@ export default {
         prodName: '',
         autoType: '',
         oem: '',
+        updateUser: '',
       },
       //修改产品的信息
       editForm: {
@@ -202,7 +203,7 @@ export default {
     async getProductList() {
       //访问后端allUser地址
       const { data: res } = await this.$http.get("allProduct", { params: this.queryProInfo });
-      console.log(res);
+      // console.log(res);
       this.productList = res.list;  //产品列表数据
       this.total = res.count; //总产品数
     },
@@ -218,6 +219,8 @@ export default {
     },
     //修改产品信息
     async editProduct(product) {
+      const user = JSON.parse(window.sessionStorage.getItem('user'));
+      product.updateUser = user.username;
       const { data: res } = await this.$http.post(`editProduct?product=${product}`); //提交参数到后台
       if (res != "success") {
         product.id = !product.id;
@@ -233,9 +236,12 @@ export default {
     addProduct() {
       this.$refs.addFormRef.validate(async valid => {
         //console.log(valid); //里面是true-false
+        console.log(window.sessionStorage.getItem('user'));
+        const user = JSON.parse(window.sessionStorage.getItem('user'));
         if (!valid) {
           return;
         }
+        this.addForm.updateUser=user.username;
         const { data: res } = await this.$http.post("addProduct", this.addForm); //提交表单的信息到后台
         if (res != "success") {
           return this.$message.error("操作失败！");

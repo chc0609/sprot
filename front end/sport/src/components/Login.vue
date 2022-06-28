@@ -78,9 +78,10 @@ export default {
           const { data: res } = await this.$http.post("login", this.loginForm); //访问后台,传递参数
           if (res.flag == 'ok') {
             this.$message.success('操作成功!'); //成功提示
-            window.sessionStorage.setItem("user", res.user); //存储user对象
+            // console.log(res.user); //js对象
+            window.sessionStorage.setItem('user', JSON.stringify(res.user)); //存储user对象  将js对象转成json存储
             this.$router.push({ path: '/home' }); //页面路由跳转路径
-            console.log(JSON.parse(window.sessionStorage.getItem("user")).v);
+            // console.log(JSON.parse(window.sessionStorage.getItem('user')));//将json转回js对象
           } else {
             this.$message.error('操作失败!'); //失败提示
           }

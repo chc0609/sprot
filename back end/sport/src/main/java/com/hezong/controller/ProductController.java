@@ -20,7 +20,7 @@ public class ProductController {
     //获取查询产品和进行分页操作
     @RequestMapping("/allProduct")
     @ResponseBody
-    public Map<String, Object> getUserList(QueryProInfo queryProInfo) {
+    public Map<String, Object> getAllProduct(QueryProInfo queryProInfo) {
         return productService.getAllProduct(queryProInfo);
     }
 
@@ -28,13 +28,15 @@ public class ProductController {
     //添加产品的方法
     @RequestMapping("/addProduct")
     public String addUser(@RequestBody Product product){
+        System.out.println(product);
         int i = productService.addProduct(product);
         return i > 0 ? "success" : "error";
     }
 
     //删除用户的方法
     @RequestMapping("/deleteProduct")
-    public String deleteUser(int id){
+    public String deleteProduct(int id){
+        System.out.println(id+"*****************");
         int i =productService.deleteProduct(id);
         return i > 0 ? "success" : "error";
     }

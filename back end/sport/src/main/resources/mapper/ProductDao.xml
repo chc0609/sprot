@@ -34,7 +34,7 @@
     <insert id="addProduct">
             INSERT INTO PRODUCT
             (PRODNAME,AUTOTYPE,OEM,UPDATETIME,UPDATEUSER,IMAGEPATH)
-            VALUES(#{prodname},#{autoType},#{oem},#{updateTime},#{updateUser},#{imagePath})
+            VALUES(#{prodName},#{autoType},#{oem},#{updateTime},#{updateUser},#{imagePath})
     </insert>
 
     <!--删除用产品的方法-->

@@ -52,15 +52,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public int addProduct(Product product) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         product.setUpdateTime(formatter.format(new Date()));
-        productDao.addProduct(product);
-        return 0;
+        product.setState(true);
+        return productDao.addProduct(product);
     }
 
     @Override
     public int deleteProduct(int id) {
-        return 0;
+        return productDao.deleteProduct(id);
     }
 
     @Override

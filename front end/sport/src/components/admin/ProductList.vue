@@ -49,11 +49,17 @@
         </el-table-column>
         <el-table-column label="产品图片" prop="imagePath" width="80%">
           <!-- 作用域插槽 -->
-          <template slot-scope="scope">
-            <!-- {{scope.row}} 每一行封存的数据 -->
-            <el-switch v-model="scope.row.state" @change="editProduct(scope.row)"></el-switch>
-          </template>
-
+<!--          <template slot-scope="scope">-->
+<!--            &lt;!&ndash; {{scope.row}} 每一行封存的数据 &ndash;&gt;-->
+<!--            <el-switch v-model="scope.row.state" @change="editProduct(scope.row)"></el-switch>-->
+<!--          </template>-->
+          <div class="demo-image__preview">
+            <el-image
+                style="width: 70px; height: 80px"
+                :src="url"
+                :preview-src-list="srcList" lazy>
+            </el-image>
+          </div>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
@@ -143,6 +149,10 @@ export default {
   },
   data() {
     return {
+      url: require("../../assets/image/VOLVO1676576.png"),
+      srcList: [
+        require("../../assets/image/VOLVO1676576.png")
+      ],
       //向后端发送请求的查询信息实体
       queryProInfo: {
         queryName: '',  //查询的产品项
@@ -150,7 +160,7 @@ export default {
         pageSize: 5,  //每页的条数
       },
       productList: [], //产品列表
-      total: 0, //初始总条数为0  
+      total: 0, //初始总条数为0
       addDialogVisible: false,//对话框显示隐藏状态
       //添加表单信息
       addForm: {
@@ -236,12 +246,12 @@ export default {
     addProduct() {
       this.$refs.addFormRef.validate(async valid => {
         //console.log(valid); //里面是true-false
-        console.log(window.sessionStorage.getItem('user'));
+        // console.log(JSON.parse(window.sessionStorage.getItem('user')));
         const user = JSON.parse(window.sessionStorage.getItem('user'));
         if (!valid) {
           return;
         }
-        this.addForm.updateUser=user.username;
+         this.addForm.updateUser=user.username;
         const { data: res } = await this.$http.post("addProduct", this.addForm); //提交表单的信息到后台
         if (res != "success") {
           return this.$message.error("操作失败！");
@@ -261,7 +271,8 @@ export default {
       if (confirmResult != 'confirm') { //判断是否取消删除
         return this.$message.info("已取消删除");
       }
-      const { data: res } = await this.$http.post("deleteUser?id=" + id);
+      console.log(id);
+      const { data: res } = await this.$http.post("deleteProduct?id=" + id);
       if (res != "success") {
         return this.$message.error("删除失败！");
       }

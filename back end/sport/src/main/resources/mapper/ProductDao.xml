@@ -49,7 +49,7 @@
 
     <!--修改产品前，根据查询出的产品进行修改-->
     <update id="editProductById">
-        UPDATE PRODUCT SET PRODNAME=#{prodname},AUTOTYPE=#{autoType},OEM=#{oem},UPDATETIME=#{updateTime},UPDATEUSER=#{updateUser} WHERE id=#{id}
+        UPDATE PRODUCT SET PRODNAME=#{prodName},AUTOTYPE=#{autoType},OEM=#{oem},UPDATETIME=#{updateTime},UPDATEUSER=#{updateUser} WHERE id=#{id}
     </update>
     <!--更新产品图片-->
     <update id="updateImage">

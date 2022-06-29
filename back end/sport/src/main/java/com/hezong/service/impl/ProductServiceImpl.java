@@ -41,7 +41,6 @@ public class ProductServiceImpl implements ProductService {
         List<Product> list = productDao.getAllProduct(queryProInfo.getQueryName(), pageStart, queryProInfo.getPageSize());
         res.put("count", count); //把总条数存入map
         res.put("list", list); //把所有用户存入map
-
         return res;
     }
 
@@ -55,6 +54,7 @@ public class ProductServiceImpl implements ProductService {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         product.setUpdateTime(formatter.format(new Date()));
         product.setState(true);
+        product.setImagePath("img.png");  //设置为默认图片
         return productDao.addProduct(product);
     }
 
@@ -70,6 +70,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public int editProductById(Product product) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        product.setUpdateTime(formatter.format(new Date()));
         return productDao.editProductById(product);
     }
 

@@ -49,17 +49,17 @@
         </el-table-column>
         <el-table-column label="产品图片" prop="imagePath" width="80%">
           <!-- 作用域插槽 -->
-<!--          <template slot-scope="scope">-->
-<!--            &lt;!&ndash; {{scope.row}} 每一行封存的数据 &ndash;&gt;-->
+          <template slot-scope="scope">
+            <!-- {{scope.row}} 每一行封存的数据 -->
 <!--            <el-switch v-model="scope.row.state" @change="editProduct(scope.row)"></el-switch>-->
-<!--          </template>-->
-          <div class="demo-image__preview">
-            <el-image
-                style="width: 70px; height: 80px"
-                :src="url"
-                :preview-src-list="srcList" lazy>
-            </el-image>
-          </div>
+            <div class="demo-image__preview">
+              <el-image
+                  style="width: 70px; height: 80px"
+                  :src="require('../../assets/image/'+scope.row.imagePath)"
+                  :preview-src-list="[require('../../assets/image/'+scope.row.imagePath)]" lazy>
+              </el-image>
+            </div>
+          </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
@@ -149,10 +149,6 @@ export default {
   },
   data() {
     return {
-      url: require("../../assets/image/VOLVO1676576.png"),
-      srcList: [
-        require("../../assets/image/VOLVO1676576.png")
-      ],
       //向后端发送请求的查询信息实体
       queryProInfo: {
         queryName: '',  //查询的产品项
@@ -168,12 +164,14 @@ export default {
         autoType: '',
         oem: '',
         updateUser: '',
+        imagePath:'',
       },
       //修改产品的信息
       editForm: {
         prodName: '',
         autoType: '',
         oem: '',
+        updateUser: '',
       },
       editDialogVisible: false, //显示和隐藏修改用户栏
       //添加产品表单验证
@@ -228,15 +226,24 @@ export default {
       this.getProductList(); //重新查询数据
     },
     //修改产品信息
-    async editProduct(product) {
+    async editProduct() {
       const user = JSON.parse(window.sessionStorage.getItem('user'));
-      product.updateUser = user.username;
-      const { data: res } = await this.$http.post(`editProduct?product=${product}`); //提交参数到后台
-      if (res != "success") {
-        product.id = !product.id;
-        return this.$message.error("操作失败！");
-      }
-      this.$message.success("操作成功！");
+      this.editForm.updateUser = user.username;
+      this.$refs.editFormRef.validate(async valid => {
+        if (!valid) {//验证失败，返回
+          return;
+        }
+        //验证成功发起请求
+        const { data: res } = await this.$http.post("editProduct", this.editForm); //提交表单的数据到后台
+        if (res != "success") {
+          return this.$message.error("操作失败!");
+        }
+        this.$message.success("操作成功!");
+        //操作完成隐藏修改的输入框
+        this.editDialogVisible = false;
+        this.getProductList(); //重新查询数据
+
+      })
     },
     //监听添加用户的事件，监听是否关闭
     addDialogClosed() {
@@ -271,7 +278,7 @@ export default {
       if (confirmResult != 'confirm') { //判断是否取消删除
         return this.$message.info("已取消删除");
       }
-      console.log(id);
+      // console.log(id);
       const { data: res } = await this.$http.post("deleteProduct?id=" + id);
       if (res != "success") {
         return this.$message.error("删除失败！");
@@ -282,7 +289,7 @@ export default {
     // //显示或者隐藏编辑输入框
     async showEditDialog(id) {
       const { data: res } = await this.$http.get("getProductById?id=" + id);  //访问后台查询出用户
-      console.log(res);
+      // console.log(res);
       this.editForm = res; //查询出的用户信息赋值给editForm
       this.editDialogVisible = true; //开启编辑输入框
     },

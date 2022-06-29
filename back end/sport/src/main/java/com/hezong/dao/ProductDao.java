@@ -28,7 +28,7 @@ public interface ProductDao {
 
     //修改用户的方法
     Product getProductById(int id);//根据id查询出用户
-    int editProductById(Product user);//根据查询出的用户进行修改
+    int editProductById(Product product);//根据查询出的用户进行修改
 
     //更新图片
     void updateImage(int id);

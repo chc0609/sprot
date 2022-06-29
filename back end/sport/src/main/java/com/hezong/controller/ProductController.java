@@ -36,7 +36,6 @@ public class ProductController {
     //删除用户的方法
     @RequestMapping("/deleteProduct")
     public String deleteProduct(int id){
-        System.out.println(id+"*****************");
         int i =productService.deleteProduct(id);
         return i > 0 ? "success" : "error";
     }

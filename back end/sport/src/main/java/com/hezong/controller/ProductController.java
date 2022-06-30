@@ -3,9 +3,11 @@ package com.hezong.controller;
 import com.alibaba.fastjson.JSON;
 import com.hezong.pojo.Product;
 import com.hezong.pojo.QueryProInfo;
+import com.hezong.service.CommonUtilService;
 import com.hezong.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -16,7 +18,8 @@ import java.util.Map;
 public class ProductController {
     @Autowired
     ProductService productService;
-
+    @Autowired
+    CommonUtilService commonUtilService;
     //获取查询产品和进行分页操作
     @RequestMapping("/allProduct")
     @ResponseBody
@@ -55,10 +58,26 @@ public class ProductController {
         return i > 0 ? "success" : "error";
     }
 
-    //更新图片
-    @RequestMapping("/updateImage")
-    public String updateImage(int id){
-        int i = productService.updateImage(id);
-        return i > 0 ? "success" : "error";
+
+    /**
+     * 前端接受产品图片将产品保存到本地，并将图片存入数据库
+     * @param id
+     * @return
+     */
+    @RequestMapping("/addProImage")
+    @ResponseBody
+    public Map<String, Object> addProImage(int id, MultipartFile file){
+        Map<String,Object> map = commonUtilService.uploadFile(file);
+        if(!(boolean)map.get("success")){
+            return map;
+        }
+        String fileName = (String) map.get("fileName");
+        int i = productService.updateImage(id,fileName);
+        if(i<=0){
+            map.put("success",false);
+            map.put("message","保存入库失败！");
+            return map;
+        }
+        return map;
     }
 }

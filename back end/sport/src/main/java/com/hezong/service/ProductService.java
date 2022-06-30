@@ -30,5 +30,5 @@ public interface ProductService {
     int editProductById(Product product);//根据查询出的产品进行修改
 
     //更新图片
-    int updateImage(int id);
+    int updateImage(int id,String fileName);
 }

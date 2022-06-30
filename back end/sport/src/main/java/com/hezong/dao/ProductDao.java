@@ -31,5 +31,5 @@ public interface ProductDao {
     int editProductById(Product product);//根据查询出的用户进行修改
 
     //更新图片
-    void updateImage(int id);
+    int updateImage(int id,String fileName);
 }

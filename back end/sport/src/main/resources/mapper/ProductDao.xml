@@ -53,6 +53,6 @@
     </update>
     <!--更新产品图片-->
     <update id="updateImage">
-        UPDATE PRODUCT SET IMAGEPATH=#{imagePath} WHERE id=#{id}
+        UPDATE PRODUCT SET IMAGEPATH=#{fileName} WHERE id=#{id}
     </update>
 </mapper>

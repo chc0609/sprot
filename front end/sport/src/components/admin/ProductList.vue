@@ -64,14 +64,26 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <!-- 修改 -->
-            <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row.id)"></el-button>
-            <!-- 删除   -->
-            <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteProduct(scope.row.id)"></el-button>
-            <!-- 权限 -->
-            <el-tooltip effect="dark" content="上传图片" placement="top-start" :enterable="false">
-              <!-- 文字提示 enterable隐藏-->
-              <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+            <el-tooltip effect="dark" content="修改产品" placement="top-start" :enterable="false">
+              <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row.id)"></el-button>
             </el-tooltip>
+            <el-tooltip effect="dark" content="删除产品" placement="top-start" :enterable="false">
+              <!-- 删除   -->
+              <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteProduct(scope.row.id)"></el-button>
+            </el-tooltip>
+
+
+              <el-upload
+                  class="upload-demo"
+                  action="https://jsonplaceholder.typicode.com/posts/"
+                  :on-change="handleChange"
+                  :file-list="fileList">
+                <!-- 上传图片 文字提示 enterable隐藏-->
+                <el-tooltip effect="dark" content="上传图片" placement="top-start" :enterable="false">
+              <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+                </el-tooltip>
+              </el-upload>
+
           </template>
         </el-table-column>
       </el-table>
@@ -125,7 +137,7 @@
           <el-input v-model="editForm.autoType"></el-input>
         </el-form-item>
         <!-- 零件类型 -->
-        <el-form-item label="零件类型" prop="email">
+        <el-form-item label="零件类型" prop="oem">
           <el-input v-model="editForm.oem"></el-input>
         </el-form-item>
       </el-form>
@@ -207,6 +219,12 @@ export default {
     }
   },
   methods: {
+    //上传图片限制
+    handleChange(file, fileList) {
+      if(this.fileList.length>1){
+        return;
+      }
+    },
     //获取所有产品
     async getProductList() {
       //访问后端allUser地址
@@ -234,7 +252,7 @@ export default {
           return;
         }
         //验证成功发起请求
-        const { data: res } = await this.$http.post("editProduct", this.editForm); //提交表单的数据到后台
+        const {data: res} = await this.$http.post("editProduct", this.editForm); //提交表单的数据到后台
         if (res != "success") {
           return this.$message.error("操作失败!");
         }
@@ -299,24 +317,6 @@ export default {
       this.$refs.editFormRef.resetFields(); //关闭窗口重置信息
     },
 
-    //确认修改
-    editProductInfo() { //表单验证
-      this.$refs.editFormRef.validate(async valid => {
-        if (!valid) {//验证失败，返回
-          return;
-        }
-        //验证成功发起请求
-        const { data: res } = await this.$http.post("editUser", this.editForm); //提交表单的数据到后台
-        if (res != "success") {
-          return this.$message.error("操作失败!");
-        }
-        this.$message.success("操作成功!");
-        //操作完成隐藏修改的输入框
-        this.editDialogVisible = false;
-        this.getProductList(); //重新查询数据
-
-      })
-    },
 
 
   },

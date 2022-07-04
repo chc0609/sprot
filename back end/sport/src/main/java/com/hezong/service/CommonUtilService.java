@@ -18,5 +18,5 @@ import java.util.*;
  **/
 public interface CommonUtilService {
 
-    Map<String,Object> uploadFile(MultipartFile file);
+    Map<String,Object> uploadFile(MultipartFile file,String monthFile);
 }

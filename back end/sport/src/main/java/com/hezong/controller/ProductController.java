@@ -67,7 +67,8 @@ public class ProductController {
     @RequestMapping("/addProImage")
     @ResponseBody
     public Map<String, Object> addProImage(int id, MultipartFile file){
-        Map<String,Object> map = commonUtilService.uploadFile(file);
+        String monthFile = productService.getProductById(id).getImagePath();
+        Map<String,Object> map = commonUtilService.uploadFile(file,monthFile);
         if(!(boolean)map.get("success")){
             return map;
         }

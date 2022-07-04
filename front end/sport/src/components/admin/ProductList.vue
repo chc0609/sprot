@@ -72,12 +72,16 @@
               <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteProduct(scope.row.id)"></el-button>
             </el-tooltip>
 
-
               <el-upload
                   class="upload-demo"
-                  action="https://jsonplaceholder.typicode.com/posts/"
+                  action
+                  :limit="1"
+                  accept=".jpg,.png"
+                  :on-exceed="handleExceed"
                   :on-change="handleChange"
-                  :file-list="fileList">
+                  :on-remove="handleRemove"
+                  :http-request="httpRequest"
+                  :data={id:scope.row.id}>
                 <!-- 上传图片 文字提示 enterable隐藏-->
                 <el-tooltip effect="dark" content="上传图片" placement="top-start" :enterable="false">
               <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
@@ -219,11 +223,46 @@ export default {
     }
   },
   methods: {
-    //上传图片限制
+
+    // 超过文件上传最大个数
+    handleExceed (files, fileList) {
+      this.$message.warning('当前支持最大上传文件个数为 1 个！')
+    },
     handleChange(file, fileList) {
-      if(this.fileList.length>1){
-        return;
-      }
+      this.fileList = fileList.slice(-3);
+    },
+    // 文件删除时
+    handleRemove (file, fileList) {
+      console.log(file, fileList)
+      this.fileList = [] // 文件列表置空
+    },
+    // 覆盖默认的上传行为，可以自定义上传的实现
+    httpRequest (param) {
+      const fileObj = param.file; // 获取file文件
+      const formData = new FormData(); // FormData对象
+      formData.append('file', fileObj); // file封装到FormData里
+      formData.append('id', param.data.id); // id封装到FormData里
+      // 请求后台上传数据的接口
+      this.$http.post('/addProImage', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+        // url: '/upload',
+        // data: formData
+        // method: 'post'
+      }).then(res => {
+        console.log(res);
+        if (res.data.success) {
+          this.$message.success(res.data.message);
+          // 清空文件列表
+          this.fileList = [];
+        } else {
+          this.$message.error(res.data.message);
+        }
+      }, err => {
+        console.log(err);
+        this.$message.error('上传文件出错');
+      })
+      // this.$router.push({ path: '/product' });
+      console.log("成功");
     },
     //获取所有产品
     async getProductList() {

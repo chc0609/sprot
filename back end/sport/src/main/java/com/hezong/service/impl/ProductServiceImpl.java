@@ -75,8 +75,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public int updateImage(int id,String fileName) {
-        productDao.updateImage(id,fileName);
-        return 0;
+        return productDao.updateImage(id,fileName);
     }
 
 

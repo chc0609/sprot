@@ -47,7 +47,7 @@
         <el-table-column label="上架时间" prop="updateTime" >
           <!--  -->
         </el-table-column>
-        <el-table-column label="产品图片" prop="imagePath" width="80%">
+        <el-table-column label="产品图片" prop="imagePath" width="80%" >
           <!-- 作用域插槽 -->
           <template slot-scope="scope">
             <!-- {{scope.row}} 每一行封存的数据 -->
@@ -56,7 +56,7 @@
               <el-image
                   style="width: 70px; height: 80px"
                   :src="require('../../assets/image/'+scope.row.imagePath)"
-                  :preview-src-list="[require('../../assets/image/'+scope.row.imagePath)]" lazy>
+                  :preview-src-list="[require('../../assets/image/'+scope.row.imagePath)]">
               </el-image>
             </div>
           </template>
@@ -74,13 +74,15 @@
 
               <el-upload
                   class="upload-demo"
-                  action
+                  action="#"
                   :limit="1"
+                  :show-file-list = true
                   accept=".jpg,.png"
                   :on-exceed="handleExceed"
                   :on-change="handleChange"
                   :on-remove="handleRemove"
                   :http-request="httpRequest"
+                  :on-success="handleSuccess"
                   :data={id:scope.row.id}>
                 <!-- 上传图片 文字提示 enterable隐藏-->
                 <el-tooltip effect="dark" content="上传图片" placement="top-start" :enterable="false">
@@ -223,13 +225,17 @@ export default {
     }
   },
   methods: {
-
+    handleSuccess(response, file, fileList){
+      console.log("handleSuccess"+response.data.fileName);
+      this.src=require('../../assets/image/'+response.data.fileName);
+    },
     // 超过文件上传最大个数
     handleExceed (files, fileList) {
       this.$message.warning('当前支持最大上传文件个数为 1 个！')
     },
     handleChange(file, fileList) {
-      this.fileList = fileList.slice(-3);
+      // this.fileList = fileList.slice(-3);
+      console.log("状态改变调用")
     },
     // 文件删除时
     handleRemove (file, fileList) {
@@ -254,6 +260,7 @@ export default {
           this.$message.success(res.data.message);
           // 清空文件列表
           this.fileList = [];
+          this.handleSuccess(res);
         } else {
           this.$message.error(res.data.message);
         }
@@ -261,8 +268,6 @@ export default {
         console.log(err);
         this.$message.error('上传文件出错');
       })
-      // this.$router.push({ path: '/product' });
-      console.log("成功");
     },
     //获取所有产品
     async getProductList() {

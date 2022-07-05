@@ -5,7 +5,7 @@
     <div class="login_box">
       <!-- logon头像开始 -->
       <div class="avatar_box">
-        <img src="../assets/hzfoot_logo.png" alt="logo" />
+        <img src="src/assets/img.png" alt="logo" />
       </div>
       <!-- logon头像结束 -->
 

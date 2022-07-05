@@ -6,6 +6,7 @@ import com.hezong.pojo.QueryProInfo;
 import com.hezong.service.CommonUtilService;
 import com.hezong.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,8 @@ import java.util.Map;
  */
 @RestController
 public class ProductController {
+    @Value("${imageDirectory}")
+    String imageDirectory;  //服务器保存图片的目录（自己本地）D:/Software/IDEAProj/sprot/front end/sport/src/assets/image/
     @Autowired
     ProductService productService;
     @Autowired
@@ -68,7 +71,7 @@ public class ProductController {
     @ResponseBody
     public Map<String, Object> addProImage(int id, MultipartFile file){
         String monthFile = productService.getProductById(id).getImagePath();
-        Map<String,Object> map = commonUtilService.uploadFile(file,monthFile);
+        Map<String,Object> map = commonUtilService.uploadFile(file,monthFile,imageDirectory);
         if(!(boolean)map.get("success")){
             return map;
         }

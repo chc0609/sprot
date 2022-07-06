@@ -55,8 +55,8 @@
             <div class="demo-image__preview">
               <el-image
                   style="width: 70px; height: 80px"
-                  :src="require('../../assets/image/'+scope.row.imagePath)"
-                  :preview-src-list="[require('../../assets/image/'+scope.row.imagePath)]">
+                  :src="require('@/assets/image/'+scope.row.imagePath)"
+                  :preview-src-list="[require('@/assets/image/'+scope.row.imagePath)]">
               </el-image>
             </div>
           </template>
@@ -227,7 +227,7 @@ export default {
   methods: {
     handleSuccess(response, file, fileList){
       console.log("handleSuccess"+response.data.fileName);
-      this.src=require('../../assets/image/'+response.data.fileName);
+      this.src=require('@/assets/image/'+response.data.fileName);
     },
     // 超过文件上传最大个数
     handleExceed (files, fileList) {
@@ -273,7 +273,8 @@ export default {
     async getProductList() {
       //访问后端allUser地址
       const { data: res } = await this.$http.get("allProduct", { params: this.queryProInfo });
-      // console.log(res);
+       // console.log(res);
+      // if(res.status)
       this.productList = res.list;  //产品列表数据
       this.total = res.count; //总产品数
     },

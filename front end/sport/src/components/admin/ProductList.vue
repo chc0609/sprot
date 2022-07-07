@@ -79,7 +79,6 @@
                   :show-file-list = true
                   accept=".jpg,.png"
                   :on-exceed="handleExceed"
-                  :on-change="handleChange"
                   :on-remove="handleRemove"
                   :http-request="httpRequest"
                   :on-success="handleSuccess"
@@ -226,7 +225,9 @@ export default {
   },
   methods: {
     handleSuccess(response, file, fileList){
-      console.log("handleSuccess"+response.data.fileName);
+      // console.log("handleSuccess"+response.data.fileName);
+      // 清空文件列表
+      // this.fileList = [];
       this.src=require('@/assets/image/'+response.data.fileName);
     },
     // 超过文件上传最大个数
@@ -255,11 +256,10 @@ export default {
         // data: formData
         // method: 'post'
       }).then(res => {
-        console.log(res);
+        // console.log(res);
         if (res.data.success) {
           this.$message.success(res.data.message);
-          // 清空文件列表
-          this.fileList = [];
+
           this.handleSuccess(res);
         } else {
           this.$message.error(res.data.message);

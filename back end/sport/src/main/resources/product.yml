@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/hezong?useSSL=false&useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    username: hezong
+    password: a88915388
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+
+server:
+  port: 8888
+  servlet:
+    context-path: /api
+logging:
+  level:
+    com:
+      hezong:
+        dao: debug
+  file:
+    name: "log/server.log"
+
+#imageDirectory: D:/Software/IDEAProj/sprot/front end/sport/src/assets/image/
+imageDirectory: /home/hezong/image/

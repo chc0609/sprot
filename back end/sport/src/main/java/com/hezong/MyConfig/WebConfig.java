@@ -21,9 +21,10 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         //配置跨域
         registry.addMapping("/**")//添加允许跨域的路径
-                .allowedOrigins("http://localhost:80")  //前端哪些域名被允许跨域,也就是请求来源
+                .allowedOrigins("*")//前端哪些域名被允许跨域,也就是请求来源
                 .allowedMethods("GET","POST","PUT","OPTIONS","DELETE","HEAD","TRACE","CONNECT") //允许哪些请求方法跨域
                 .allowCredentials(true) //是否允许携带信息,例如token
+                .allowedHeaders("*")
                 .maxAge(3600);  //设置最大响应时间
     }
 }

@@ -55,8 +55,8 @@
             <div class="demo-image__preview">
               <el-image
                   style="width: 70px; height: 80px"
-                  :src="require('@/assets/image/'+scope.row.imagePath)"
-                  :preview-src-list="[require('@/assets/image/'+scope.row.imagePath)]">
+                  :src="'/static/'+scope.row.imagePath"
+                  :preview-src-list="['/static/'+scope.row.imagePath]">
               </el-image>
             </div>
           </template>
@@ -228,7 +228,8 @@ export default {
       // console.log("handleSuccess"+response.data.fileName);
       // 清空文件列表
       // this.fileList = [];
-      this.src=require('@/assets/image/'+response.data.fileName);
+      // this.src='/static/'+response.data.fileName;
+      this.getProductList();
     },
     // 超过文件上传最大个数
     handleExceed (files, fileList) {

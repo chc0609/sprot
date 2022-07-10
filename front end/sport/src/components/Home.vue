@@ -4,9 +4,6 @@
     <!-- 头部开始 -->
     <el-header>
       <!-- logo -->
-<!--      <div>-->
-<!--        <img class="img-logo" src="../assets/Naruto.png" alt="Naruto" />-->
-<!--      </div>-->
       <span>后台管理系统</span>
       <el-button type="info" @click="logout()">安全退出</el-button>
     </el-header>

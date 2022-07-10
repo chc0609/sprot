@@ -1,3 +1,4 @@
+# 生产环境
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -22,5 +23,5 @@ logging:
   file:
     name: "log/server.log"
 
-#imageDirectory: D:/Software/IDEAProj/sprot/front end/sport/src/assets/image/
-imageDirectory: /home/hezong/image/
+
+imageDirectory: /home/nginx/nginx/dist/static/

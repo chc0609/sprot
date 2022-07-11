@@ -30,6 +30,12 @@ public class ProductController {
         return productService.getAllProduct(queryProInfo);
     }
 
+    //获取id查询产品
+    @RequestMapping("/queryProductById")
+    @ResponseBody
+    public Product queryProductById(int id) {
+        return productService.getProductById(id);
+    }
 
     //添加产品的方法
     @RequestMapping("/addProduct")
